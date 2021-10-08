@@ -1,9 +1,17 @@
+{{#each posts as |post| }}
+<div class="row mb-4 post">
+  <div class="col-md-5">
+    {{!-- If the title of the post is selected, then the post will be displayed with the option to comment on the post --}}
+    <h2>
+      <a href="/post/{{post.id}}">{{post.title}}</a>
+    </h2>
+    <p>Created by {{post.user.name}} on {{format_date post.date_created}}</p>
+  </div>
 
-{{#each posts as |post|}}
-
-{{> post-info post }}
+  <div class="col-md-7">
+    <p>
+      {{post.description}}
+    </p>
+  </div>
 </div>
-
-{{else}}
-<h6 class="pb-4 has-text-centered is-italic">there are currently no posts</h6>
 {{/each}}

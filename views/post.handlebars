@@ -1,18 +1,47 @@
-<section>
-    <a href="/dashboard" class="is-pulled-right"> &larr; back to dashboard</a>
-  <h2 class="title">create new blog post</h2><hr>
+<div class="text-center">
+  {{!-- product.name or post.name --}}
+  <h2>{{title}}</h2>
+  {{!-- product.description --}}
+  <p>{{description}}</p>
+  {{!-- user.name, use helper "format_date" on "product.date_created" --}}
+  <p>Created by {{user.name}} on {{format_date date_created}}</p>
 
-  <form class="new-post-form">
-    <div>
-      <label for="post-title">title:</label>
-      <input class="input" type="text" id="post-title" name="post-title" placeholder="insert blog title here"/>
+  {{!-- for each post.comment_ids, display the information --}}
+  {{#each comments as |comment|}}
+    <div class="row mb-2">
+      <div class="col-md-8">
+        {{comment.title}}
+        <p>Created by {{comment.user.name}} on {{format_date comment.date_created}}</p>
+      </div>
+      <p>{{comment.description}}</p>
     </div>
-    <div>
-      <label for="post-content">content:</label>
-      <input class="textarea is-large" id="post-content" name="post-content" placeholder="insert blog content here"/>
+    {{/each}}
+
+{{!-- Add a comment to the post
+  (is there a way to click a button to display form fields?) --}}
+  <form class="form new-comment-form">
+    <div class="form-group">
+      <label for="comment-title">comment title:</label>
+      <input class="form-input" type="text" id="comment-title" name="comment-title" />
     </div>
-    <button type="submit" class="button is-primary is-pulled-right">create post</button>
+    <div class="form-group">
+      <label for="comment-desc">description:</label>
+      <textarea class="form-input" id="comment-desc" name="comment-desc"></textarea>
+    </div>
+    <div class="form-group">
+      <input type="hidden" name="post-id" value="{{id}}" id="post-id"/>
+    </div>
+
+{{!-- See 14-28 views/profile.handlebars line 39-41
+ used to get the "data-id" see comment.js--}}
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">+New Comment</button>
+    </div>
   </form>
-</section>
 
-<script src="/javascript/add-post.js"></script>
+      {{!-- <div class="col-md-4">
+        <button class="btn btn-sm btn-danger" data-id="{{project.id}}">DELETE</button>
+      </div> --}}
+</div>
+
+<script src="/js/comment.js"></script>
